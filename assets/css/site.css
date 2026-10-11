@@ -1,0 +1,379 @@
+/* ==========================================================================
+   yanneshmeijman.com
+   Original design: Studio SMS (Katharina Shafiei-Nasab & Alix Stria), built on Cargo.
+   Rebuilt as a static site, October 2026.
+   ========================================================================== */
+
+/* ---------- Fonts ----------
+   The Cargo site used "Gravity Variable" and "Walter Neue Variable", which are
+   licensed only for use on Cargo. Archivo (wide, heavy) and Inter stand in for
+   them. To use licensed files later, add @font-face rules and change the
+   --font-* variables below — nothing else needs to change. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Inter:wght@400..700&display=swap");
+
+@font-face {
+  font-family: "VCR OSD Mono";
+  src: url("../fonts/VCROSD-Mono.woff") format("woff");
+  font-display: swap;
+}
+
+:root {
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif; /* was Gravity */
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;      /* was Walter Neue */
+  --font-mono: "VCR OSD Mono", "Courier New", monospace;
+
+  --white: #ffffff;
+  --black: #000000;
+  --accent: #00ff11; /* active link colour */
+
+  --header-h: 3.6rem;
+  --pad: 1.5rem;
+  --stroke: 3px;
+}
+
+/* Everything is sized in rem, and rem follows the viewport width, like Cargo. */
+html { font-size: 0.9vw; }
+@media (max-width: 767px) { html { font-size: 3.136vw; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; background: var(--black); }
+
+body {
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+}
+@media (max-width: 767px) { body { font-size: 1.4rem; } }
+
+/* The signature look: white type with a black outline painted underneath, so
+   text stays legible on top of video. */
+body, h1, h2, .project-name, .sub-headline, .header-link {
+  -webkit-text-stroke: var(--stroke) var(--black);
+  paint-order: stroke fill;
+}
+
+a { color: inherit; text-decoration: none; }
+a:active { opacity: 0.7; }
+a.active { color: var(--accent); }
+
+img, video { display: block; max-width: 100%; height: auto; }
+
+/* ---------- Text styles ---------- */
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  margin: 0;
+  display: inline-block;
+}
+
+h2, .h2 {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin: 0;
+  display: inline-block;
+}
+
+@media (max-width: 767px) {
+  h1, .h1, h2, .h2 { font-size: 1.4rem; }
+}
+
+.project-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  font-size: 2.8rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: center;
+  --stroke: 5px;
+}
+
+.sub-headline {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .project-name { font-size: 2rem; --stroke: 4px; }
+  .sub-headline { font-size: 1.4rem; text-align: center; }
+}
+
+small { font-size: 1em; } /* Cargo wrapped headings in <small> without shrinking them */
+
+.small-caps { font-variant: small-caps; text-transform: lowercase; }
+sub { position: relative; vertical-align: baseline; top: 0.3em; }
+sup { position: relative; vertical-align: baseline; top: -0.4em; }
+ol { margin: 0; padding: 0 0 0 2.5em; list-style-type: decimal-leading-zero; }
+ul { margin: 0; padding: 0 0 0 2em; }
+blockquote { margin: 0; padding: 0 0 0 2em; }
+
+ul.lineated { list-style: none; margin: 0 0 0 1.2em; padding: 0; text-indent: -1.2em; }
+.icon { display: inline-block; width: 1.2em; text-indent: 0; text-align: left; }
+.icon-arrow { width: auto; margin-right: 0.15em; }
+
+hr { background: var(--white); border: 0; height: 1px; margin: 0 0 1rem; }
+
+/* Column layouts (Cargo "column-set"): a 12 column grid. */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter, 1rem);
+}
+.cols > .col { grid-column: span var(--span, 12); }
+@media (max-width: 767px) {
+  .cols:not(.keep-mobile) { display: block; }
+  .cols:not(.keep-mobile) > .col + .col { margin-top: 2rem; }
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  padding: var(--pad);
+}
+.header-link {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.site-header .cols { --gutter: 1rem; }
+.site-header .right { text-align: right; }
+
+.site-header.mobile { display: none; }
+
+@media (max-width: 767px) {
+  .site-header.desktop { display: none; }
+  .site-header.mobile {
+    display: block;
+    background: var(--black);
+    text-align: center;
+  }
+  .site-header.mobile .header-link { font-size: 1.4rem; }
+  .site-header.mobile .card-line {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+  .site-header.mobile nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+  }
+  :root { --header-h: 0px; }
+  main { padding-top: var(--mobile-header-h, 15rem); }
+}
+
+/* ---------- Background video / image ("backdrop") ----------
+   A box that shows one YouTube loop, video file or image, either fitted
+   (contain) or filling (cover) the box. Sizing is done in site.js. */
+.backdrop {
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+}
+.backdrop .frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+.backdrop iframe {
+  position: absolute;
+  left: 0;
+  border: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.backdrop .poster,
+.backdrop video,
+.backdrop .frame > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
+}
+.backdrop iframe { opacity: 0; transition: opacity 0.6s ease; }
+.backdrop.playing iframe { opacity: 1; }
+
+/* ---------- Home ---------- */
+.home .backdrop {
+  position: fixed;
+  inset: 0;
+}
+.home main {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 0 7.4rem 0;
+  pointer-events: none;
+}
+.home .card-slot {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.business-card {
+  pointer-events: auto;
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 1.76rem; /* 2.2rem × 0.8, as on the Cargo site */
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--black);
+  background: var(--white);
+  -webkit-text-stroke: 1px var(--black);
+  border: 0.3rem solid rgba(0, 0, 0, 0.85);
+  padding: 1rem 3rem;
+  filter: drop-shadow(0.6rem 0.6rem 0 rgba(0, 0, 0, 0.85));
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(-5deg);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.business-card:active { cursor: grabbing; }
+.business-card a { color: var(--black); }
+
+@media (max-width: 767px) {
+  .home main { display: none; }
+  .home .backdrop.desktop-only { display: none; }
+  .home .backdrop.mobile-only {
+    display: block;
+    position: fixed;
+    inset: var(--mobile-header-h, 15rem) 0.6rem 0.6rem 0.6rem;
+  }
+}
+.backdrop.mobile-only { display: none; }
+
+/* ---------- Projects index ---------- */
+.project-row {
+  display: flex;
+  min-height: calc(100vh - var(--header-h));
+}
+.project-row:first-child { margin-top: var(--header-h); }
+.project-row .row-text {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.project-row .backdrop {
+  width: 50%;
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+}
+.project-row .row-text .sub-headline { margin-top: 0; }
+
+@media (max-width: 767px) {
+  .project-row {
+    position: relative;
+    min-height: 100svh;
+    margin-top: 0 !important;
+  }
+  .project-row .backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .project-row .row-text {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+}
+
+/* ---------- Project detail pages ---------- */
+.project-page {
+  display: flex;
+  align-items: flex-start;
+  margin-top: var(--header-h);
+}
+.project-page .content {
+  width: 50%;
+  padding: 10rem 1rem 5rem 1.5rem;
+  background: var(--black);
+}
+.project-page .backdrop {
+  width: 50%;
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+}
+.project-page .intro { text-align: center; }
+
+@media (max-width: 767px) {
+  .project-page { margin-top: 0; }
+  .project-page .content { width: 100%; padding: 3rem var(--pad) 5rem; }
+  .project-page .backdrop { display: none; }
+}
+
+/* Media inside page text */
+.content .media { width: 100%; height: auto; margin: 0; }
+.content .media.zoomable { cursor: zoom-in; }
+
+/* ---------- About ---------- */
+.about main {
+  padding: calc(var(--header-h) + 2rem) var(--pad) var(--pad);
+  min-height: 100vh;
+}
+.about .credit { text-align: right; margin-top: 4rem; }
+
+/* The flying pigeon */
+.flyer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20vmax;
+  pointer-events: none;
+  z-index: 50;
+  will-change: transform;
+}
+
+/* ---------- Lightbox for zoomable images ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  cursor: zoom-out;
+}
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; }
+@media (max-width: 767px) { .lightbox { padding: 10px; } }
